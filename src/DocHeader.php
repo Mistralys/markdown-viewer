@@ -59,7 +59,7 @@ class DocHeader
     {
         $new = str_replace(
             sprintf('<h%s>', $this->level),
-            sprintf('<h%s id="%s">', $this->level, $this->id),
+            sprintf('<h%s><a class="anchor" id="%s"></a>', $this->level, $this->id),
             $this->tag
         );
 
