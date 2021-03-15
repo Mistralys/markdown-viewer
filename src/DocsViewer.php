@@ -9,6 +9,7 @@ class DocsViewer
     const ERROR_NO_DOCUMENTS_AVAILABLE = 82001;
 
     private string $title = 'Documentation';
+    private string $menuLabel = 'Available documents';
 
     private DocsManager $docs;
 
@@ -35,9 +36,27 @@ class DocsViewer
         }
     }
 
+    /**
+     * Sets the title of the document and the navigation label.
+     *
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title) : DocsViewer
     {
         $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * Sets the label of the menu item listing all the available documents.
+     *
+     * @param string $label
+     * @return $this
+     */
+    public function setMenuLabel(string $label) : DocsViewer
+    {
+        $this->menuLabel = $label;
         return $this;
     }
 
@@ -73,7 +92,7 @@ class DocsViewer
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Documentation files
+                        <?php echo $this->menuLabel ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute">
                         <?php
