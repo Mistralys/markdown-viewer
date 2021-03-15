@@ -13,17 +13,18 @@ class DocsViewer
     private DocsManager $docs;
 
     private string $vendorURL;
+    private string $packageURL;
 
-/**
+    /**
      * @param DocsManager $manager
+     * @param string $vendorURL
      * @throws DocsException
-     *
      * @see DocsViewer::ERROR_NO_DOCUMENTS_AVAILABLE
      */
     public function __construct(DocsManager $manager, string $vendorURL)
     {
         $this->docs = $manager;
-        $this->vendorURL = $vendorURL;
+        $this->vendorURL = rtrim($vendorURL, '/');
 
         if(!$this->docs->hasFiles()) {
             throw new DocsException(
@@ -67,39 +68,36 @@ class DocsViewer
         <title><?php echo $this->title ?></title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-dark bg-dark fixed-top">
             <a class="navbar-brand" href="#"><?php echo $this->title ?></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Documentation files
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <?php
-                                $files = $this->docs->getFiles();
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Documentation files
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute">
+                        <?php
+                        $files = $this->docs->getFiles();
 
-                                foreach ($files as $file) {
-                                    ?>
-                                        <a class="dropdown-item" href="?doc=<?php echo $file->getID() ?>">
-                                            <?php echo $file->getTitle() ?>
-                                        </a>
-                                    <?php
-                                }
+                        foreach ($files as $file) {
                             ?>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                            <a class="dropdown-item" href="?doc=<?php echo $file->getID() ?>">
+                                <?php echo $file->getTitle() ?>
+                            </a>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </li>
+            </ul>
         </nav>
-        <table>
+        <table id="scaffold">
             <tbody>
                 <tr>
                     <td id="sidebar">
-                        <?php echo $this->renderMenu($parser->getHeaders()); ?>
+                        <div class="sidebar-wrapper">
+                            <?php echo $this->renderMenu($parser->getHeaders()); ?>
+                        </div>
                     </td>
                     <td id="content">
                         <div class="content-wrapper">
@@ -110,11 +108,26 @@ class DocsViewer
             </tbody>
         </table>
         <link rel="stylesheet" href="<?php echo $this->vendorURL ?>/twbs/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="<?php echo $this->vendorURL ?>/mistralys/markdown-viewer/css/styles.css">
+        <link rel="stylesheet" href="<?php echo $this->getPackageURL() ?>/css/styles.css">
         <script src="<?php echo $this->vendorURL ?>/components/jquery/jquery.js"></script>
         <script src="<?php echo $this->vendorURL ?>/twbs/bootstrap/dist/js/bootstrap.js"></script>
     </body>
 </html><?php
+    }
+
+    public function setPackageURL(string $url) : DocsViewer
+    {
+        $this->packageURL = rtrim($url, '/');
+        return $this;
+    }
+
+    private function getPackageURL() : string
+    {
+        if(!empty($this->packageURL)) {
+            return $this->packageURL;
+        }
+
+        return $this->vendorURL;
     }
 
     /**
