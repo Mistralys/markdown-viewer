@@ -29,29 +29,29 @@ will display them.
 ```php
 <?php
 
-    declare(strict_types=1);
+declare(strict_types=1);
 
-    use Mistralys\MarkdownViewer\DocsManager;
-    use Mistralys\MarkdownViewer\DocsViewer;
+use Mistralys\MarkdownViewer\DocsManager;
+use Mistralys\MarkdownViewer\DocsViewer;
 
-    if(!file_exists('vendor/autoload.php')) {
-        die('Please run <code>composer install</code> first.');
-    }
+if(!file_exists('vendor/autoload.php')) {
+    die('Please run <code>composer install</code> first.');
+}
 
-    require_once 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
-    $manager = new DocsManager();
-    
-    // Add all the files you wish to view here, along with
-    // a title that will be shown in the UI. 
-    $manager->addFile('Title of the file', '/path/to/documentation.md');
+$manager = new DocsManager();
 
-    // The viewer needs to know the URL to the vendor/ folder, relative
-    // to the script. This is needed to load the clientside dependencies,
-    // like jQuery and Bootstrap.
-    (new DocsViewer($manager, '/url/to/vendor'))
-        ->setTitle('Documentation')
-        ->display();
+// Add all the files you wish to view here, along with
+// a title that will be shown in the UI. 
+$manager->addFile('Title of the file', '/path/to/documentation.md');
+
+// The viewer needs to know the URL to the vendor/ folder, relative
+// to the script. This is needed to load the clientside dependencies,
+// like jQuery and Bootstrap.
+(new DocsViewer($manager, '/url/to/vendor'))
+    ->setTitle('Documentation')
+    ->display();
 ```
 
 ## Adding files
@@ -92,6 +92,24 @@ $manager = new DocsManager();
 
 // Add all TXT files from a single folder, non recursive.
 $manager->addFolder('/path/to/files', false, 'txt');
+```
+
+## Dark mode
+
+To turn on dark mode, simply use `makeDarkMode()`:
+
+```php
+use Mistralys\MarkdownViewer\DocsViewer;
+use Mistralys\MarkdownViewer\DocsManager;
+
+$manager = new DocsManager();
+
+// Configure the files
+
+(new DocsViewer($manager, '/url/to/vendor'))
+    ->setTitle('Documentation')
+    ->makeDarkMode()
+    ->display();
 ```
 
 ## Viewing the example
