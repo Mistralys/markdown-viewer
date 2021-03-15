@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mistralys\MarkdownViewer;
 
+use AppUtils\FileHelper;
 use AppUtils\FileHelper_Exception;
 
 class DocsManager
@@ -27,6 +28,37 @@ class DocsManager
     public function addFile(string $title, string $path) : DocsManager
     {
         $this->files[] = new DocFile($title, $path);
+        return $this;
+    }
+
+    /**
+     * Adds files from a folder.
+     *
+     * @param string $path
+     * @param bool $recursive
+     * @param string $extension
+     * @return $this
+     * @throws FileHelper_Exception
+     */
+    public function addFolder(string $path, bool $recursive=false, string $extension='md') : DocsManager
+    {
+        FileHelper::requireFolderExists($path);
+
+        $finder = FileHelper::createFileFinder($path)
+            ->includeExtension($extension)
+            ->setPathmodeAbsolute();
+
+        if($recursive) {
+            $finder->makeRecursive();
+        }
+
+        $files = $finder->getAll();
+
+        foreach ($files as $file)
+        {
+            $this->addFile(FileHelper::removeExtension($file), $file);
+        }
+
         return $this;
     }
 
