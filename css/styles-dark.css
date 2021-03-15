@@ -1,0 +1,74 @@
+BODY{
+    color:rgba(255,255,255,0.7);
+}
+
+A{
+    color:#afd5ff;
+}
+CODE{
+    color:#3ed1e8;
+}
+
+
+/* Geshi */
+PRE {
+    background-color: rgba(0,0,0,0.2) !important;
+    border: none !important;
+    padding: 1em !important;
+    font-size: 1em;
+}
+
+PRE CODE{
+    color:#ffa657;
+}
+
+/* Line highlights */
+PRE .li1 { background: #202021 !important; }
+
+/* comments */
+PRE .co1,
+PRE .co4,
+PRE .coMULTI { color: #8b949e !important; }
+
+/* methods */
+PRE .me1 { color: #d2a8ff !important; }
+PRE .me0 { }
+PRE .me2 { color: #ffcc66 !important; }
+
+/* brackets */
+PRE .br0 { color:#b3b3b3 !important; }
+
+/* strings */
+PRE .st0 { color: #99ff00 !important; }
+PRE .st_h { color: #a5d6ff !important; }
+
+PRE .sy0 { color: #ffdcb8 !important; }
+
+/* keywords */
+PRE .kw1 { color: #ff7b72  !important; }
+PRE .kw2 { color: #ff7b72 !important; }
+PRE .kw3 { color: #07dffc !important; }
+PRE .kw4 { color: #07dffc !important; }
+
+/* numbers */
+PRE .nu0 { color: #66cc66 !important; }
+
+/* vars */
+PRE .re0 { color: #79c0ff !important; }
+
+/* CSS selectors */
+
+/* classnames */
+PRE [lang=css] .kw2,
+PRE .css .kw2 { color: #f9ee7e !important; }
+PRE .re1 { color: #96703d !important; }
+
+/* px values */
+PRE [lang=css] .re3,
+PRE .css .re3 { color: #ca7840 !important; }
+
+/* Javascript */
+PRE [lang=javascript] .me1,
+PRE .javascript .me1 { color: #505e80 !important; }
+
+PRE .text .de1, PRE .text .de2 { font-family: monospace, Courier; }

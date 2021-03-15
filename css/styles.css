@@ -39,7 +39,7 @@ H3{
 
 #sidebar{
     min-width: 16rem;
-    background: #f7f7f7;
+    background: rgba(0,0,0,0.1);
 }
 
 .sidebar-wrapper{
@@ -55,8 +55,12 @@ H3{
 
 PRE{
     padding:1rem;
-    background: #f7f7f7;
+    background: rgba(0,0,0,0.05);
     border-radius: 4px;
+}
+
+CODE{
+    font-size:100%;
 }
 
 .site-header {
@@ -80,9 +84,33 @@ PRE{
     margin-top:4rem;
 }
 
+A{
+    color:#3269a5;
+}
 A.anchor{
     position:relative;
     display:block;
     top:-4rem;
     visibility: hidden;
 }
+
+
+PRE CODE{color: #465760;}
+PRE .kw1 {color: #E06645; }
+PRE .kw2 {color: #2778b3; }
+PRE .kw3 {color: #E06645;}
+PRE .kw4 {color: #E06645;}
+PRE .co0 {color: #808080; font-style: italic;}
+PRE .co1 {color: #808080; font-style: italic;}
+PRE .co2 {color: #808080; font-style: italic;}
+PRE .coMULTI {color: #808080; font-style: italic;}
+PRE .es0 {color: #EEBE5B; }
+PRE .br0 {color: #717171;}
+PRE .sy0 {color: #465760;}
+PRE .st0 {color: #47B340;}
+PRE .st_h {color: #47B340;}
+PRE .nu0 {color: #cc66cc;}
+PRE .me1 {color: #0085CD;}
+PRE .me2 {color: #0085CD;}
+PRE .re0 {color: #8594A8;}
+PRE .re1 {color: #0085CD;}
