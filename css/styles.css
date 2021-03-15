@@ -1,31 +1,32 @@
 #sidebar .nav-level-0{
-list-style: none;
-padding-left: 0;
-margin-left: 0.5rem;
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0.5rem;
+    margin-top:2rem;
 }
 
 #sidebar .nav-level-0 > LI > A{
-font-weight: 600;
+    font-weight: 600;
 }
 
 #sidebar .nav-level-0 > LI{
-margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .nav-level-3{
-display:none;
+    display:none;
 }
 
 H1{
-margin-bottom:2rem;
+    margin-bottom:2rem;
 }
 
 H2{
-margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 H3{
-margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 #content,
@@ -34,15 +35,19 @@ margin-bottom: 1rem;
 }
 
 #content{
-    width: 80%;
+    width: 100%;
 }
 
 #sidebar{
-    width: 20%;
+    min-width: 16rem;
+    background: #f7f7f7;
+}
+
+.sidebar-wrapper{
+    width: 16rem;
     position: fixed;
     height: calc(100vh - 4rem);
     overflow-y: auto;
-    background: #f7f7f7;
 }
 
 .content-wrapper{
@@ -50,9 +55,9 @@ margin-bottom: 1rem;
 }
 
 PRE{
-padding:1rem;
-background: #f7f7f7;
-border-radius: 4px;
+    padding:1rem;
+    background: #f7f7f7;
+    border-radius: 4px;
 }
 
 .site-header {
@@ -66,4 +71,19 @@ border-radius: 4px;
 .site-header a:hover {
     color: #fff;
     text-decoration: none;
+}
+
+.navbar{
+    height:4rem;
+}
+
+#scaffold{
+    margin-top:4rem;
+}
+
+A.anchor{
+    position:relative;
+    display:block;
+    top:-4rem;
+    visibility: hidden;
 }
