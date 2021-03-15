@@ -1,8 +1,7 @@
 #sidebar .nav-level-0{
     list-style: none;
     padding-left: 0;
-    margin-left: 0.5rem;
-    margin-top:2rem;
+    margin:2rem 0.5rem;
 }
 
 #sidebar .nav-level-0 > LI > A{
