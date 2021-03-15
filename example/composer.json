@@ -1,0 +1,15 @@
+{
+  "name": "mistralys/markdown-viewer-example",
+  "description": "Example for the markdown viewer.",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sebastian Mordziol",
+      "email": "s.mordziol@mistralys.eu"
+    }
+  ],
+  "require": {
+    "mistralys/markdown-viewer": ">=1.0.0"
+  }
+}
