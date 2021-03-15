@@ -12,9 +12,10 @@
     require_once 'vendor/autoload.php';
 
     $manager = (new DocsManager())
-        ->addFile('Package readme', '../README.md');
+        ->addFile('Package readme', 'README.md');
 
-    (new DocsViewer($manager, '../vendor'))
+    (new DocsViewer($manager, 'vendor'))
         ->setTitle('Markdown viewer')
+        ->setPackageURL('./')
         ->display();
 
