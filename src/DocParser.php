@@ -69,10 +69,6 @@ class DocParser
 
     private function checkBullet(string $line, int $pos) : string
     {
-        if($pos > 4) {
-            return $line;
-        }
-
         $sub = substr($line, 0, $pos);
         $trimmed = trim($sub);
 
