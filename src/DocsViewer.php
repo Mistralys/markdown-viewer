@@ -13,6 +13,7 @@ class DocsViewer
 
     private DocsManager $docs;
 
+    private bool $darkMode = false;
     private string $vendorURL;
     private string $packageURL;
 
@@ -34,6 +35,12 @@ class DocsViewer
                 self::ERROR_NO_DOCUMENTS_AVAILABLE
             );
         }
+    }
+
+    public function makeDarkMode() : DocsViewer
+    {
+        $this->darkMode = true;
+        return $this;
     }
 
     /**
@@ -126,8 +133,29 @@ class DocsViewer
                 </tr>
             </tbody>
         </table>
-        <link rel="stylesheet" href="<?php echo $this->vendorURL ?>/twbs/bootstrap/dist/css/bootstrap.min.css">
+        <?php
+            if($this->darkMode) {
+                ?>
+                    <link rel="stylesheet" href="<?php echo $this->getPackageURL() ?>/css/slate.min.css">
+                <?php
+            }
+            else
+            {
+                ?>
+                    <link rel="stylesheet" href="<?php echo $this->vendorURL ?>/twbs/bootstrap/dist/css/bootstrap.min.css">
+                <?php
+            }
+        ?>
         <link rel="stylesheet" href="<?php echo $this->getPackageURL() ?>/css/styles.css">
+        <?php
+
+            if($this->darkMode) {
+                ?>
+                    <link rel="stylesheet" href="<?php echo $this->getPackageURL() ?>/css/styles-dark.css">
+                <?php
+            }
+
+        ?>
         <script src="<?php echo $this->vendorURL ?>/components/jquery/jquery.js"></script>
         <script src="<?php echo $this->vendorURL ?>/twbs/bootstrap/dist/js/bootstrap.js"></script>
     </body>
