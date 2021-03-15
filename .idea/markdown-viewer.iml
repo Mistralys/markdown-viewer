@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/pear/html_common2" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/neitanod/forceutf8" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/mistralys/html_quickform2" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/components/jquery" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/geshi/geshi" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/parsecsv/php-parsecsv" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/mistralys/markdown-viewer" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/pear/pear_exception" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/mistralys/application-utils" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/erusev/parsedown-extra" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/erusev/parsedown" />
+      <excludeFolder url="file://$MODULE_DIR$/example/vendor/twbs/bootstrap" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
