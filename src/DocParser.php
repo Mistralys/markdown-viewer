@@ -7,6 +7,7 @@ namespace Mistralys\MarkdownViewer;
 use AppUtils\ConvertHelper;
 use AppUtils\FileHelper;
 use AppUtils\Highlighter;
+use GeSHi;
 use ParsedownExtra;
 
 class DocParser
@@ -118,9 +119,16 @@ class DocParser
     {
         $code = html_entity_decode($code);
 
-        $high = Highlighter::fromString($code, $language)->parse_code();
+        $geshi = new GeSHi($code, $language);
+        $geshi->set_overall_class('geshifilter');
+        $geshi->enable_classes();
+        $geshi->set_methods_highlighting(true);
+        $geshi->set_numbers_highlighting(true);
+        $geshi->set_symbols_highlighting(true);
+        $geshi->set_strings_highlighting(true);
+        $high = $geshi->parse_code();
 
-        $high = str_replace('<pre class="php" style="font-family:monospace;">', '', $high);
+        $high = str_replace('<pre class="php geshifilter">', '', $high);
         $high = str_replace('</pre>', '', $high);
 
         return $high;
