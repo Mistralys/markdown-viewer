@@ -127,7 +127,7 @@ class DocsViewer
             return $this->packageURL;
         }
 
-        return $this->vendorURL;
+        return $this->vendorURL.'/mistralys/markdown-viewer';
     }
 
     /**
