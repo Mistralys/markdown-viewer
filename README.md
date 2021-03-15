@@ -2,23 +2,20 @@
 
 PHP based viewer for Markdown files, to view them with fenced code highlighting and navigation. 
 
-It is designed to be used for viewing markdown-based documentation files.
+It is designed to be used for viewing markdown-based documentation files, in a fire and forget
+way. The layout is based on Bootstrap 4, and does not need any additional configuration.
 
 ## Install
 
-The project is made to be used as a dependency in your documentation project. Simply require 
-it in your project:
+The project is made to be used as a dependency in your documentation project. 
 
-```
-composer require mistralys/markdown-viewer
-```
-
-## Quick start
-
-1. Create the file `index.php` in your project root folder.
-2. Paste the following example code into the file
-3. Edit the list of files you wish to view.
-4. Point your browser to the file.
+1. Create a folder in your webroot from which to serve the documentation.
+2. Create a composer project there.
+3. Require the package: `composer require mistralys/markdown-viewer`.
+4. Create a PHP file (`index.php`) as endpoint for the documentation.
+5. Paste the following code into the file
+6. Edit the list of files you wish to view.
+7. Point your browser to the file.
 
 ```php
 <?php
@@ -40,6 +37,9 @@ composer require mistralys/markdown-viewer
     // a title that will be shown in the UI. 
     $manager->addFile('Title of the file', '/path/to/documentation.md');
 
+    // The viewer needs to know the URL to the vendor/ folder, relative
+    // to the script. This is needed to load the clientside dependencies,
+    // like jQuery and Bootstrap.
     (new DocsViewer($manager, '/url/to/vendor'))
         ->setTitle('Documentation')
         ->display();
@@ -47,10 +47,9 @@ composer require mistralys/markdown-viewer
 
 ## Viewing the example
 
-The example is built exactly like the example above, and will display the package's
-`README.md` file. To get it running, follow these steps:
+The bundled example is built exactly like the example above, and will display 
+the package's `README.md` file. To get it running, follow these steps:
 
 1. Clone the repository into a webserver's document root
-2. Run `composer install` in the folder to install the dependencies
-3. Point your browser to the example folder
-
+2. Run `composer install` in the package folder to install the dependencies
+3. Point your browser to the package folder's `example.php` file
