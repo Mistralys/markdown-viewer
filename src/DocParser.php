@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mistralys\MarkdownViewer;
 
+use AppUtils\ConvertHelper;
 use AppUtils\FileHelper;
 use AppUtils\Highlighter;
 use ParsedownExtra;
@@ -20,7 +21,11 @@ class DocParser
     public function __construct(DocFile $file)
     {
         $parse = new ParsedownExtra();
-        $this->html = strval($parse->text(FileHelper::readContents($file->getPath())));
+
+        $text = FileHelper::readContents($file->getPath());
+        $text = $this->parseListStyles($text);
+
+        $this->html = strval($parse->text($text));
 
         $this->parseHeaders();
         $this->parseCode();
@@ -32,6 +37,50 @@ class DocParser
     public function getHeaders() : array
     {
         return $this->headers;
+    }
+
+    /**
+     * Replace all list items in the text that use the "1)" notation
+     * with the markdown "1." style so it can be detected correctly.
+     *
+     * @param string $text
+     * @return string
+     */
+    private function parseListStyles(string $text) : string
+    {
+        $lines = explode("\n", $text);
+        $total = count($lines);
+
+        $keep = array();
+        for($i=0; $i < $total; $i++)
+        {
+            $line = $lines[$i];
+            $pos = strpos($line, ')');
+
+            if($pos !== false) {
+                $line = $this->checkBullet($line, $pos);
+            }
+
+            $keep[] = $line;
+        }
+
+        return implode("\n", $keep);
+    }
+
+    private function checkBullet(string $line, int $pos) : string
+    {
+        if($pos > 4) {
+            return $line;
+        }
+
+        $sub = substr($line, 0, $pos);
+        $trimmed = trim($sub);
+
+        if(is_numeric($trimmed)) {
+            return substr_replace($line,$trimmed.'.', 0, $pos+1);
+        }
+
+        return $line;
     }
 
     private function parseHeaders() : void
