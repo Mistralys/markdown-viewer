@@ -1,12 +1,12 @@
 {
-  "name": "ionos/maileditor-develdocs",
-  "description": "Developer documentation for the Maileditor",
+  "name": "mistralys/markdown-viewer",
+  "description": "PHP based viewer for Markdown files, to view them with fenced code highlighting and navigation.",
   "minimum-stability": "stable",
-  "license": "proprietary",
+  "license": "MIT",
   "authors": [
     {
-      "name": "Argh",
-      "email": "email@example.com"
+      "name": "Sebastian Mordziol",
+      "email": "s.mordziol@mistralys.eu"
     }
   ],
   "autoload": {
