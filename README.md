@@ -15,10 +15,10 @@ composer require mistralys/markdown-viewer
 
 ## Quick start
 
-1) Create the file `index.php` in your project root folder.
-2) Paste the following example code into the file
-3) Edit the list of files you wish to view.
-4) Point your browser to the file.
+1. Create the file `index.php` in your project root folder.
+2. Paste the following example code into the file
+3. Edit the list of files you wish to view.
+4. Point your browser to the file.
 
 ```php
 <?php
@@ -50,7 +50,7 @@ composer require mistralys/markdown-viewer
 The example is built exactly like the example above, and will display the package's
 `README.md` file. To get it running, follow these steps:
 
-1) Clone the repository into a webserver's document root
-2) Run `composer install` in the folder to install the dependencies
-3) Point your browser to the example folder
+1. Clone the repository into a webserver's document root
+2. Run `composer install` in the folder to install the dependencies
+3. Point your browser to the example folder
 
