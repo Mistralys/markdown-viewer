@@ -5,9 +5,18 @@ PHP based viewer for Markdown files, to view them with fenced code highlighting 
 It is designed to be used for viewing markdown-based documentation files, in a fire and forget
 way. The layout is based on Bootstrap 4, and does not need any additional configuration.
 
-## Install
+## Features
 
-The project is made to be used as a dependency in your documentation project. 
+- Automatic jump navigation built using the document's headers.
+- Easily switch between the available documents.
+- Syntax highlighted fenced code blocks.
+- Additional support for "1)" style ordered lists.
+
+## Installing
+
+The package is made to be used as a dependency in a documentation project:
+Put it in a folder in a webserver, point it to some markdown files, and it
+will display them.
 
 1) Create a folder in your webroot from which to serve the documentation.
 2) Create a composer project there.
@@ -45,10 +54,50 @@ The project is made to be used as a dependency in your documentation project.
         ->display();
 ```
 
+## Adding files
+
+Single files can be added using `addFile()`. This allows specifying the
+name that the file will be listed under in the UI.
+
+```php
+use Mistralys\MarkdownViewer\DocsManager;
+
+$manager = new DocsManager();
+
+// Add a single folder, non recursive.
+$manager->addFile('Name of the file', '/path/to/file.md');
+```
+
+To add multiple files, use the `addFolder()` method:
+
+```php
+use Mistralys\MarkdownViewer\DocsManager;
+
+$manager = new DocsManager();
+
+// Add a single folder, non recursive.
+$manager->addFolder('/path/to/files');
+
+// Add a folder and all its subfolders
+$manager->addFolder('/path/to/files', true);
+```
+
+By default, all files with the `md` extension will be added. A different extension
+can be specified using the third parameter:
+
+```php
+use Mistralys\MarkdownViewer\DocsManager;
+
+$manager = new DocsManager();
+
+// Add all TXT files from a single folder, non recursive.
+$manager->addFolder('/path/to/files', false, 'txt');
+```
+
 ## Viewing the example
 
 The bundled example is built exactly like the example above, and will display 
-the package's `README.md` file. To get it running, follow these steps:
+this `README.md` file. To get it running, follow these steps:
 
 1) Clone the repository into a webserver's document root
 2) Run `composer install` in the package folder to install the dependencies
