@@ -22,12 +22,13 @@ class DocsManager
      *
      * @param string $title
      * @param string $path
+     * @param string $id Optional ID to uniquely identify the file. If empty, the path is used. Specify an ID if you wish file IDs to be the same cross-system.
      * @return $this
      * @throws FileHelper_Exception
      */
-    public function addFile(string $title, string $path) : DocsManager
+    public function addFile(string $title, string $path, string $id='') : DocsManager
     {
-        $this->files[] = new DocFile($title, $path);
+        $this->files[] = new DocFile($title, $path, $id);
         return $this;
     }
 
