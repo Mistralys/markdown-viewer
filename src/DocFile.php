@@ -24,7 +24,16 @@ class DocFile
     {
         $this->title = $title;
         $this->path = FileHelper::requireFileExists($path);
-        $this->id = $id;
+        $this->id = $this->resolveID($id);
+    }
+
+    private function resolveID(string $id) : string
+    {
+        if(empty($id)) {
+            $id = $this->path;
+        }
+
+        return ConvertHelper::string2shortHash($id);
     }
 
     /**
@@ -37,10 +46,6 @@ class DocFile
 
     public function getID() : string
     {
-        if(empty($this->id)) {
-            $this->id = ConvertHelper::string2shortHash($this->path);
-        }
-
         return $this->id;
     }
 
