@@ -19,6 +19,8 @@ class DocParser
 
     private string $html;
 
+    private DocFile $file;
+
     public function __construct(DocFile $file)
     {
         $parse = new ParsedownExtra();
@@ -26,6 +28,7 @@ class DocParser
         $text = FileHelper::readContents($file->getPath());
         $text = $this->parseListStyles($text);
 
+        $this->file = $file;
         $this->html = strval($parse->text($text));
 
         $this->parseHeaders();
@@ -94,7 +97,7 @@ class DocParser
 
             $active[$level] = $header;
 
-            $this->html = $header->replace($this->html);
+            $this->html = $header->replace($this->html, $this->file);
 
             if($level === 1) {
                 $this->headers[] = $header;
