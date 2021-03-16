@@ -55,7 +55,7 @@ $manager->addFile('Title of the file', '/path/to/documentation.md');
     ->display();
 ```
 
-## Adding files
+## Adding single files
 
 Single files can be added using `addFile()`. This allows specifying the
 name that the file will be listed under in the UI.
@@ -68,6 +68,8 @@ $manager = new DocsManager();
 // Add a single folder, non recursive.
 $manager->addFile('Name of the file', '/path/to/file.md');
 ```
+
+## Adding folders
 
 To add multiple files, use the `addFolder()` method:
 
@@ -94,6 +96,33 @@ $manager = new DocsManager();
 // Add all TXT files from a single folder, non recursive.
 $manager->addFolder('/path/to/files', false, 'txt');
 ```
+
+  > NOTE: Adding files this way means you cannot specify file IDs (see "Consistent 
+    file permalinks"). Please double-check that this is okay in your use case.
+
+## Consistent file permalinks
+
+By default, the viewer will create an ID for each file based on its absolute
+path on disk. This means that the ID will change if the file is moved at some
+point, or if the viewer is used on different systems. Sharing permalinks risks
+the links being broken at some point.
+
+To avoid this issue, specify a unique file ID manually when adding single files:
+
+```php
+use Mistralys\MarkdownViewer\DocsManager;
+
+$manager = new DocsManager();
+
+$manager->addFile(
+    'Name of the file', 
+    '/path/to/file.md',
+    '(Unique file ID)'
+);
+```
+
+The ID can be any string; the viewer uses it to create the hash that is used in the UI
+to identify the files. This way, permalinks will always stay consistent. 
 
 ## Dark mode
 
