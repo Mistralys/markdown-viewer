@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67c59e344f5ace49429664d43b1f66ea",
+    "content-hash": "3f3845b63d1c77e0947c2398e2e9babf",
     "packages": [
         {
             "name": "components/jquery",
@@ -204,16 +204,16 @@
         },
         {
             "name": "mistralys/application-utils",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Mistralys/application-utils.git",
-                "reference": "986f6cd741d9d98865ca7ce1e05574fec3b1f038"
+                "reference": "ae2e8a8f88ca69eb08a0d6eea7f2988e51c6e338"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Mistralys/application-utils/zipball/986f6cd741d9d98865ca7ce1e05574fec3b1f038",
-                "reference": "986f6cd741d9d98865ca7ce1e05574fec3b1f038",
+                "url": "https://api.github.com/repos/Mistralys/application-utils/zipball/ae2e8a8f88ca69eb08a0d6eea7f2988e51c6e338",
+                "reference": "ae2e8a8f88ca69eb08a0d6eea7f2988e51c6e338",
                 "shasum": ""
             },
             "require": {
@@ -256,9 +256,9 @@
             "description": "Drop-in utilities for PHP applications.",
             "support": {
                 "issues": "https://github.com/Mistralys/application-utils/issues",
-                "source": "https://github.com/Mistralys/application-utils/tree/1.4.0"
+                "source": "https://github.com/Mistralys/application-utils/tree/1.4.1"
             },
-            "time": "2021-03-12T10:01:34+00:00"
+            "time": "2021-03-16T20:56:55+00:00"
         },
         {
             "name": "mistralys/html_quickform2",
