@@ -55,11 +55,31 @@ class DocHeader
         return $this->level;
     }
 
-    public function replace(string $subject) : string
+    /**
+     * Replaces the <hx> tag in the subject string with the adjusted
+     * markup for the permalink icon and jump anchor.
+     *
+     * @param string $subject
+     * @param DocFile $file
+     * @return string
+     */
+    public function replace(string $subject, DocFile $file) : string
     {
+        $template =
+            '<h%1$s>'.
+                '<a class="permalink" href="?doc=%3$s#%2$s">'.
+                    '<span>§</span>'.
+                '</a>'.
+                '<a class="anchor" id="%2$s"></a>';
+
         $new = str_replace(
             sprintf('<h%s>', $this->level),
-            sprintf('<h%s><a class="anchor" id="%s"></a>', $this->level, $this->id),
+            sprintf(
+                $template,
+                $this->level,
+                $this->id,
+                $file->getID()
+            ),
             $this->tag
         );
 

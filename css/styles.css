@@ -94,6 +94,26 @@ A.anchor{
     visibility: hidden;
 }
 
+H1,H2,H3,H4,H5{
+    margin-left: -1.2rem;
+}
+H1:hover .permalink > SPAN,
+H2:hover .permalink > SPAN,
+H3:hover .permalink > SPAN,
+H4:hover .permalink > SPAN,
+H5:hover .permalink > SPAN{
+    visibility: visible;
+}
+A.permalink{
+    float: left;
+    text-decoration: none;
+    margin-right: 0.2rem;
+}
+
+A.permalink > SPAN{
+    visibility: hidden;
+}
+
 
 PRE CODE{color: #465760;}
 PRE .kw1 {color: #E06645; }
