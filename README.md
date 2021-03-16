@@ -10,6 +10,7 @@ way. The layout is based on Bootstrap 4, and does not need any additional config
 - Automatic jump navigation built using the document's headers.
 - Easily switch between the available documents.
 - Syntax highlighted fenced code blocks.
+- Light and dark modes. 
 - Additional support for "1)" style ordered lists.
 
 ## Installing
