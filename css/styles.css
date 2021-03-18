@@ -114,6 +114,20 @@ A.permalink > SPAN{
     visibility: hidden;
 }
 
+BLOCKQUOTE{
+    margin-left: 2rem;
+    background: #e7f1d0;
+    padding:0.5rem;
+    border-radius: 4px;
+}
+
+BLOCKQUOTE > P:last-child{
+    margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------------
+   SYNTAX HIGHLIGHTING
+--------------------------------------------------------------------- */
 
 PRE CODE{color: #465760;}
 PRE .kw1 {color: #E06645; }

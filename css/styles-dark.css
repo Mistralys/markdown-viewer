@@ -5,12 +5,20 @@ BODY{
 A{
     color:#afd5ff;
 }
+
+BLOCKQUOTE {
+    background: #213544;
+}
+
+
+/* ------------------------------------------------------------------
+   SYNTAX HIGHLIGHTING
+--------------------------------------------------------------------- */
+
 CODE{
     color:#3ed1e8;
 }
 
-
-/* Geshi */
 PRE {
     background-color: rgba(0,0,0,0.2) !important;
     border: none !important;
