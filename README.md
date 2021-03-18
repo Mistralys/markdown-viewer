@@ -5,6 +5,10 @@ PHP based viewer for Markdown files, to view them with fenced code highlighting 
 It is designed to be used for viewing markdown-based documentation files, in a fire and forget
 way. The layout is based on Bootstrap 4, and does not need any additional configuration.
 
+## Requirements
+
+- PHP7.3+
+
 ## Features
 
 - Automatic jump navigation built using the document's headers.
