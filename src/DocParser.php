@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Mistralys\MarkdownViewer;
 
-use AppUtils\ConvertHelper;
 use AppUtils\FileHelper;
-use AppUtils\Highlighter;
 use GeSHi;
 use ParsedownExtra;
 
@@ -15,11 +13,17 @@ class DocParser
     /**
      * @var DocHeader[]
      */
-    private array $headers = array();
+    private $headers = array();
 
-    private string $html;
+    /**
+     * @var string
+     */
+    private $html;
 
-    private DocFile $file;
+    /**
+     * @var DocFile
+     */
+    private $file;
 
     public function __construct(DocFile $file)
     {
@@ -88,6 +92,7 @@ class DocParser
         preg_match_all('%<h([0-9])\b[^>]*>(.*?)</h[0-9]>%si', $this->html, $result, PREG_PATTERN_ORDER);
 
         $active = array();
+        $headers = array();
 
         foreach($result[2] as $idx => $title)
         {
@@ -95,9 +100,8 @@ class DocParser
 
             $level = $header->getLevel();
 
+            $headers[] = $header;
             $active[$level] = $header;
-
-            $this->html = $header->replace($this->html, $this->file);
 
             if($level === 1) {
                 $this->headers[] = $header;
@@ -105,6 +109,11 @@ class DocParser
             }
 
             $active[($level-1)]->addSubheader($header);
+        }
+
+        foreach ($headers as $header)
+        {
+            $this->html = $header->replace($this->html, $this->file);
         }
     }
 
