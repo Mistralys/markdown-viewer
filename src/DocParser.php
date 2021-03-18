@@ -131,7 +131,7 @@ class DocParser
         $geshi->set_strings_highlighting(true);
         $high = $geshi->parse_code();
 
-        $high = str_replace('<pre class="php geshifilter">', '', $high);
+        $high = str_replace('<pre class="'.$language.' geshifilter">', '', $high);
         $high = str_replace('</pre>', '', $high);
 
         return $high;
