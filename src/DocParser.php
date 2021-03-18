@@ -25,6 +25,17 @@ class DocParser
      */
     private $file;
 
+    /**
+     * Aliases for code fence language names.
+     *
+     * @var array<string,string>
+     */
+    private $langAliases = array(
+        'js' => 'javascript',
+        'html' => 'html5',
+        'json' => 'javascript'
+    );
+
     public function __construct(DocFile $file)
     {
         $parse = new ParsedownExtra();
@@ -123,8 +134,17 @@ class DocParser
 
         foreach($result[2] as $idx => $matchedText)
         {
-            $this->html = str_replace($matchedText, $this->renderCode($matchedText, $result[1][$idx]), $this->html);
+            $this->html = str_replace($matchedText, $this->renderCode($matchedText, $this->resolveLanguage($result[1][$idx])), $this->html);
         }
+    }
+
+    private function resolveLanguage(string $lang) : string
+    {
+        if(isset($this->langAliases[$lang])) {
+            return $this->langAliases[$lang];
+        }
+
+        return $lang;
     }
 
     private function renderCode(string $code, string $language) : string
