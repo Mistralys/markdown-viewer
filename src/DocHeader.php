@@ -8,15 +8,40 @@ use AppUtils\ConvertHelper;
 
 class DocHeader
 {
-    private string $title;
-    private int $level;
-    private string $tag;
-    private string $id;
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var int
+     */
+    private $level;
+
+    /**
+     * @var string
+     */
+    private $tag;
+
+    /**
+     * @var string
+     */
+    private $id;
 
     /**
      * @var DocHeader[]
      */
-    private array $headers = array();
+    private $headers = array();
+
+    /**
+     * @var array<string,int>
+     */
+    private static $anchors = array();
+
+    /**
+     * @var string
+     */
+    private $anchor;
 
     public function __construct(string $title, int $level, string $matchedTag)
     {
@@ -24,6 +49,24 @@ class DocHeader
         $this->level = $level;
         $this->tag = $matchedTag;
         $this->id = ConvertHelper::transliterate($title);
+        $this->anchor = $this->createAnchor();
+    }
+
+    private function createAnchor() : string
+    {
+        if(!isset(self::$anchors[$this->id])) {
+            self::$anchors[$this->id] = 0;
+        }
+
+        self::$anchors[$this->id]++;
+
+        $anchor = $this->id;
+
+        if(self::$anchors[$this->id] > 1) {
+            $anchor .= '-'.self::$anchors[$this->id];
+        }
+
+        return $anchor;
     }
 
     public function addSubheader(DocHeader $header) : void
@@ -45,6 +88,11 @@ class DocHeader
     public function getID(): string
     {
         return $this->id;
+    }
+
+    public function getAnchor() : string
+    {
+        return $this->anchor;
     }
 
     /**
@@ -77,7 +125,7 @@ class DocHeader
             sprintf(
                 $template,
                 $this->level,
-                $this->id,
+                $this->getAnchor(),
                 $file->getID()
             ),
             $this->tag
@@ -92,7 +140,7 @@ class DocHeader
 
         ?>
             <li>
-                <a href="#<?php echo $this->id ?>"><?php echo $this->title ?></a>
+                <a href="#<?php echo $this->getAnchor() ?>"><?php echo $this->title ?></a>
                 <?php echo $this->renderSubheaders() ?>
             </li>
         <?php
