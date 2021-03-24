@@ -15,7 +15,7 @@ class DocsManager
     /**
      * @var DocFile[]
      */
-    private array $files = array();
+    private $files = array();
 
     /**
      * Adds a documentation file to the collection.

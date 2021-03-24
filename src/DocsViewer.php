@@ -8,14 +8,35 @@ class DocsViewer
 {
     const ERROR_NO_DOCUMENTS_AVAILABLE = 82001;
 
-    private string $title = 'Documentation';
-    private string $menuLabel = 'Available documents';
+    /**
+     * @var string
+     */
+    private $title = 'Documentation';
 
-    private DocsManager $docs;
+    /**
+     * @var string
+     */
+    private $menuLabel = 'Available documents';
 
-    private bool $darkMode = false;
-    private string $vendorURL;
-    private string $packageURL;
+    /**
+     * @var DocsManager
+     */
+    private $docs;
+
+    /**
+     * @var bool
+     */
+    private $darkMode = false;
+
+    /**
+     * @var string
+     */
+    private $vendorURL;
+
+    /**
+     * @var string
+     */
+    private $packageURL;
 
     /**
      * @param DocsManager $manager

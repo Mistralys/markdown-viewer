@@ -10,9 +10,20 @@ use AppUtils\FileHelper_Exception;
 
 class DocFile
 {
-    private string $title;
-    private string $path;
-    private string $id;
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var string
+     */
+    private $path;
+
+    /**
+     * @var string
+     */
+    private $id;
 
     /**
      * @param string $title
