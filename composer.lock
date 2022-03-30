@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f3845b63d1c77e0947c2398e2e9babf",
+    "content-hash": "63eeef9510b6015e16a3750e2ce78865",
     "packages": [
         {
             "name": "components/jquery",
-            "version": "3.5.1",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "b33e8f0f9a1cb2ae390cf05d766a900b53d2125b"
+                "reference": "6cf38ee1fd04b6adf8e7dda161283aa35be818c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/b33e8f0f9a1cb2ae390cf05d766a900b53d2125b",
-                "reference": "b33e8f0f9a1cb2ae390cf05d766a900b53d2125b",
+                "url": "https://api.github.com/repos/components/jquery/zipball/6cf38ee1fd04b6adf8e7dda161283aa35be818c3",
+                "reference": "6cf38ee1fd04b6adf8e7dda161283aa35be818c3",
                 "shasum": ""
             },
             "type": "component",
@@ -53,7 +53,7 @@
                 "source": "https://github.com/jquery/jquery",
                 "wiki": "http://docs.jquery.com/"
             },
-            "time": "2020-05-05T13:21:02+00:00"
+            "time": "2021-03-20T19:13:42+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -204,23 +204,30 @@
         },
         {
             "name": "mistralys/application-utils",
-            "version": "1.4.1",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Mistralys/application-utils.git",
-                "reference": "ae2e8a8f88ca69eb08a0d6eea7f2988e51c6e338"
+                "reference": "689ec58cd25286ff85f3f6be0831aee9d5f1cb48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Mistralys/application-utils/zipball/ae2e8a8f88ca69eb08a0d6eea7f2988e51c6e338",
-                "reference": "ae2e8a8f88ca69eb08a0d6eea7f2988e51c6e338",
+                "url": "https://api.github.com/repos/Mistralys/application-utils/zipball/689ec58cd25286ff85f3f6be0831aee9d5f1cb48",
+                "reference": "689ec58cd25286ff85f3f6be0831aee9d5f1cb48",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-gd": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-simplexml": "*",
+                "ext-zip": "*",
                 "geshi/geshi": ">=1.0.9.1",
                 "mistralys/html_quickform2": ">=2.1.2",
                 "neitanod/forceutf8": ">=2.0.4",
-                "parsecsv/php-parsecsv": ">=1.2.1",
+                "parsecsv/php-parsecsv": "1.2.*",
                 "php": ">=7.3"
             },
             "require-dev": {
@@ -232,12 +239,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "AppUtils\\": "src/"
-                },
                 "files": [
                     "src/functions.php"
                 ],
+                "psr-4": {
+                    "AppUtils\\": "src/"
+                },
                 "classmap": [
                     "src/"
                 ]
@@ -256,9 +263,9 @@
             "description": "Drop-in utilities for PHP applications.",
             "support": {
                 "issues": "https://github.com/Mistralys/application-utils/issues",
-                "source": "https://github.com/Mistralys/application-utils/tree/1.4.1"
+                "source": "https://github.com/Mistralys/application-utils/tree/1.9.1"
             },
-            "time": "2021-03-16T20:56:55+00:00"
+            "time": "2022-01-10T21:02:52+00:00"
         },
         {
             "name": "mistralys/html_quickform2",
@@ -433,25 +440,28 @@
         },
         {
             "name": "pear/html_common2",
-            "version": "v2.1.2",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/HTML_Common2.git",
-                "reference": "a7867b8deb887765a431a5877d90d3430624dea7"
+                "reference": "3d7f6956ff1b479847b227194c23eb0d5d053a9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/HTML_Common2/zipball/a7867b8deb887765a431a5877d90d3430624dea7",
-                "reference": "a7867b8deb887765a431a5877d90d3430624dea7",
+                "url": "https://api.github.com/repos/pear/HTML_Common2/zipball/3d7f6956ff1b479847b227194c23eb0d5d053a9e",
+                "reference": "3d7f6956ff1b479847b227194c23eb0d5d053a9e",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.6.0"
+            },
             "require-dev": {
-                "phpunit/phpunit": "^3.7|^4.8|^5.7"
+                "yoast/phpunit-polyfills": "^1.0"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "HTML": "./"
+                    "HTML_Common2": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -479,30 +489,30 @@
                 "html"
             ],
             "support": {
-                "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=HTML_Common2",
+                "issues": "https://github.com/pear/HTML_Common2/issues",
                 "source": "https://github.com/pear/HTML_Common2"
             },
-            "time": "2019-04-07T10:59:56+00:00"
+            "time": "2022-03-26T09:17:22+00:00"
         },
         {
             "name": "pear/pear_exception",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pear/PEAR_Exception.git",
-                "reference": "dbb42a5a0e45f3adcf99babfb2a1ba77b8ac36a7"
+                "reference": "b14fbe2ddb0b9f94f5b24cf08783d599f776fff0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/dbb42a5a0e45f3adcf99babfb2a1ba77b8ac36a7",
-                "reference": "dbb42a5a0e45f3adcf99babfb2a1ba77b8ac36a7",
+                "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/b14fbe2ddb0b9f94f5b24cf08783d599f776fff0",
+                "reference": "b14fbe2ddb0b9f94f5b24cf08783d599f776fff0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=4.4.0"
+                "php": ">=5.2.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "*"
+                "phpunit/phpunit": "<9"
             },
             "type": "class",
             "extra": {
@@ -541,31 +551,26 @@
                 "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=PEAR_Exception",
                 "source": "https://github.com/pear/PEAR_Exception"
             },
-            "time": "2019-12-10T10:24:42+00:00"
+            "time": "2021-03-21T15:43:46+00:00"
         },
         {
             "name": "twbs/bootstrap",
-            "version": "v4.6.0",
+            "version": "v5.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "6ffb0b48e455430f8a5359ed689ad64c1143fac2"
+                "reference": "1a6fdfae6be09b09eaced8f0e442ca6f7680a61e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/6ffb0b48e455430f8a5359ed689ad64c1143fac2",
-                "reference": "6ffb0b48e455430f8a5359ed689ad64c1143fac2",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/1a6fdfae6be09b09eaced8f0e442ca6f7680a61e",
+                "reference": "1a6fdfae6be09b09eaced8f0e442ca6f7680a61e",
                 "shasum": ""
             },
             "replace": {
                 "twitter/bootstrap": "self.version"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3.x-dev"
-                }
-            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -594,15 +599,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v4.6.0"
+                "source": "https://github.com/twbs/bootstrap/tree/v5.1.3"
             },
-            "funding": [
-                {
-                    "url": "https://opencollective.com/bootstrap",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2021-01-19T16:16:38+00:00"
+            "time": "2021-10-09T06:43:19+00:00"
         }
     ],
     "packages-dev": [],
@@ -611,7 +610,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=7.4"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
 }
