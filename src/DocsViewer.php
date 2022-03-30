@@ -1,42 +1,34 @@
 <?php
+/**
+ * File containing the class {@see \Mistralys\MarkdownViewer\DocsViewer}.
+ *
+ * @package MarkdownViewer
+ * @see \Mistralys\MarkdownViewer\DocsViewer
+ */
 
 declare(strict_types=1);
 
 namespace Mistralys\MarkdownViewer;
 
+use AppUtils\OutputBuffering;use AppUtils\OutputBuffering_Exception;
+
+/**
+ * Renders the documentation viewer UI, using the
+ * list of documents contained in the manager instance.
+ *
+ * @package MarkdownViewer
+ * @author Sebastian Mordziol <s.mordziol@mistralys.eu>
+ */
 class DocsViewer
 {
-    const ERROR_NO_DOCUMENTS_AVAILABLE = 82001;
+    public const ERROR_NO_DOCUMENTS_AVAILABLE = 82001;
 
-    /**
-     * @var string
-     */
-    private $title = 'Documentation';
-
-    /**
-     * @var string
-     */
-    private $menuLabel = 'Available documents';
-
-    /**
-     * @var DocsManager
-     */
-    private $docs;
-
-    /**
-     * @var bool
-     */
-    private $darkMode = false;
-
-    /**
-     * @var string
-     */
-    private $vendorURL;
-
-    /**
-     * @var string
-     */
-    private $packageURL;
+    private string $title = 'Documentation';
+    private string $menuLabel = 'Available documents';
+    private DocsManager $docs;
+    private bool $darkMode = false;
+    private string $vendorURL;
+    private string $packageURL;
 
     /**
      * @param DocsManager $manager
@@ -201,10 +193,11 @@ class DocsViewer
     /**
      * @param DocHeader[] $headers
      * @return string
+     * @throws OutputBuffering_Exception
      */
     private function renderMenu(array $headers) : string
     {
-        ob_start();
+        OutputBuffering::start();
 
         ?>
         <ul class="nav-level-0">
@@ -217,6 +210,6 @@ class DocsViewer
         </ul>
         <?php
 
-        return ob_get_clean();
+        return OutputBuffering::get();
     }
 }

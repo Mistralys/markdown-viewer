@@ -1,47 +1,43 @@
 <?php
+/**
+ * File containing the class {@see \Mistralys\MarkdownViewer\DocHeader}.
+ *
+ * @package MarkdownViewer
+ * @see \Mistralys\MarkdownViewer\DocHeader
+ */
 
 declare(strict_types=1);
 
 namespace Mistralys\MarkdownViewer;
 
 use AppUtils\ConvertHelper;
+use AppUtils\OutputBuffering;
 
+/**
+ * Handles a single header in the document, with
+ * information on the anchor to use to jump to it,
+ * among other things.
+ *
+ * @package MarkdownViewer
+ * @author Sebastian Mordziol <s.mordziol@mistralys.eu>
+ */
 class DocHeader
 {
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var int
-     */
-    private $level;
-
-    /**
-     * @var string
-     */
-    private $tag;
-
-    /**
-     * @var string
-     */
-    private $id;
+    private string $title;
+    private int $level;
+    private string $tag;
+    private string $id;
+    private string $anchor;
 
     /**
      * @var DocHeader[]
      */
-    private $headers = array();
+    private array $headers = array();
 
     /**
      * @var array<string,int>
      */
-    private static $anchors = array();
-
-    /**
-     * @var string
-     */
-    private $anchor;
+    private static array $anchors = array();
 
     public function __construct(string $title, int $level, string $matchedTag)
     {
@@ -136,7 +132,7 @@ class DocHeader
 
     public function render() : string
     {
-        ob_start();
+        OutputBuffering::start();
 
         ?>
             <li>
@@ -145,7 +141,7 @@ class DocHeader
             </li>
         <?php
 
-        return ob_get_clean();
+        return OutputBuffering::get();
     }
 
     private function renderSubheaders() : string
@@ -154,7 +150,7 @@ class DocHeader
             return '';
         }
 
-        ob_start();
+        OutputBuffering::start();
         ?>
             <ul class="nav-level-<?php echo $this->level ?>">
                 <?php
@@ -166,6 +162,6 @@ class DocHeader
             </ul>
         <?php
 
-        return ob_get_clean();
+        return OutputBuffering::get();
     }
 }

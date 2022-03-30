@@ -1,4 +1,10 @@
 <?php
+/**
+ * File containing the class {@see \Mistralys\MarkdownViewer\DocsManager}.
+ *
+ * @package MarkdownViewer
+ * @see \Mistralys\MarkdownViewer\DocsManager
+ */
 
 declare(strict_types=1);
 
@@ -7,15 +13,23 @@ namespace Mistralys\MarkdownViewer;
 use AppUtils\FileHelper;
 use AppUtils\FileHelper_Exception;
 
+/**
+ * Handles a collection of documentation files to use
+ * in the viewer. Handles registering and reading the
+ * list of files.
+ *
+ * @package MarkdownViewer
+ * @author Sebastian Mordziol <s.mordziol@mistralys.eu>
+ */
 class DocsManager
 {
-    const ERROR_NO_FIRST_FILE_FOUND = 82101;
-    const ERROR_UNKNOWN_FILE_ID = 82102;
+    public const ERROR_NO_FIRST_FILE_FOUND = 82101;
+    public const ERROR_UNKNOWN_FILE_ID = 82102;
 
     /**
      * @var DocFile[]
      */
-    private $files = array();
+    private array $files = array();
 
     /**
      * Adds a documentation file to the collection.
@@ -122,7 +136,7 @@ class DocsManager
 
     public function getFiles() : array
     {
-        usort($this->files, function (DocFile $a, DocFile $b) {
+        usort($this->files, static function (DocFile $a, DocFile $b) : int {
             return strnatcasecmp($a->getTitle(), $b->getTitle());
         });
 
