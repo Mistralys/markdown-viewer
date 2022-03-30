@@ -1,4 +1,10 @@
 <?php
+/**
+ * File containing the class {@see \Mistralys\MarkdownViewer\DocParser}.
+ *
+ * @package MarkdownViewer
+ * @see \Mistralys\MarkdownViewer\DocParser
+ */
 
 declare(strict_types=1);
 
@@ -8,22 +14,24 @@ use AppUtils\FileHelper;
 use GeSHi;
 use ParsedownExtra;
 
+/**
+ * Markdown document parser. Uses "ParseDown extra" to parse the
+ * document, and adds some of its own functionality into the mix.
+ *
+ * @package MarkdownViewer
+ * @author Sebastian Mordziol <s.mordziol@mistralys.eu>
+ */
 class DocParser
 {
+    public const OVERALL_CLASS = 'geshifilter';
+
+    private string $html;
+    private DocFile $file;
+
     /**
      * @var DocHeader[]
      */
-    private $headers = array();
-
-    /**
-     * @var string
-     */
-    private $html;
-
-    /**
-     * @var DocFile
-     */
-    private $file;
+    private array $headers = array();
 
     /**
      * Aliases for code fence language names.
@@ -44,7 +52,7 @@ class DocParser
         $text = $this->parseListStyles($text);
 
         $this->file = $file;
-        $this->html = strval($parse->text($text));
+        $this->html = (string)$parse->text($text);
 
         $this->parseHeaders();
         $this->parseCode();
@@ -60,7 +68,7 @@ class DocParser
 
     /**
      * Replace all list items in the text that use the "1)" notation
-     * with the markdown "1." style so it can be detected correctly.
+     * with the markdown "1." style, so it can be detected correctly.
      *
      * @param string $text
      * @return string
@@ -68,12 +76,10 @@ class DocParser
     private function parseListStyles(string $text) : string
     {
         $lines = explode("\n", $text);
-        $total = count($lines);
 
         $keep = array();
-        for($i=0; $i < $total; $i++)
+        foreach ($lines as $line)
         {
-            $line = $lines[$i];
             $pos = strpos($line, ')');
 
             if($pos !== false) {
@@ -107,7 +113,7 @@ class DocParser
 
         foreach($result[2] as $idx => $title)
         {
-            $header = new DocHeader($title, intval($result[1][$idx]), $result[0][$idx]);
+            $header = new DocHeader($title, (int)$result[1][$idx], $result[0][$idx]);
 
             $level = $header->getLevel();
 
@@ -119,7 +125,12 @@ class DocParser
                 continue;
             }
 
-            $active[($level-1)]->addSubheader($header);
+            $prevIndex = ($level-1);
+
+            if(isset($active[$prevIndex]))
+            {
+                $active[$prevIndex]->addSubheader($header);
+            }
         }
 
         foreach ($headers as $header)
@@ -140,11 +151,7 @@ class DocParser
 
     private function resolveLanguage(string $lang) : string
     {
-        if(isset($this->langAliases[$lang])) {
-            return $this->langAliases[$lang];
-        }
-
-        return $lang;
+        return $this->langAliases[$lang] ?? $lang;
     }
 
     private function renderCode(string $code, string $language) : string
@@ -152,7 +159,7 @@ class DocParser
         $code = html_entity_decode($code);
 
         $geshi = new GeSHi($code, $language);
-        $geshi->set_overall_class('geshifilter');
+        $geshi->set_overall_class(self::OVERALL_CLASS);
         $geshi->enable_classes();
         $geshi->set_methods_highlighting(true);
         $geshi->set_numbers_highlighting(true);
@@ -160,10 +167,14 @@ class DocParser
         $geshi->set_strings_highlighting(true);
         $high = $geshi->parse_code();
 
-        $high = str_replace('<pre class="'.$language.' geshifilter">', '', $high);
-        $high = str_replace('</pre>', '', $high);
-
-        return $high;
+        return str_replace(
+            array(
+                sprintf('<pre class="%s %s">', $language, self::OVERALL_CLASS),
+                '</pre>'
+            ),
+            '',
+            $high
+        );
     }
 
     public function render() : string
