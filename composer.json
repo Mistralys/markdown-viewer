@@ -14,6 +14,11 @@
       "src"
     ]
   },
+  "autoload-dev": {
+    "classmap": [
+      "tests/TestClasses"
+    ]
+  },
   "require": {
     "erusev/parsedown": ">=1.7.4",
     "erusev/parsedown-extra": ">=0.8.1",
@@ -21,5 +26,10 @@
     "components/jquery": ">=3.5.1",
     "mistralys/application-utils": ">=1.6.0",
     "php": ">=7.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": ">=9.6.9",
+    "phpstan/phpstan": ">=1.10",
+    "roave/security-advisories": "dev-latest"
   }
 }
