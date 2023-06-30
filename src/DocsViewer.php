@@ -108,44 +108,42 @@ class DocsViewer
     </head>
     <body>
         <nav class="navbar navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#"><?php echo $this->title ?></a>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $this->menuLabel ?>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute">
-                        <?php
-                        $files = $this->docs->getFiles();
-
-                        foreach ($files as $file) {
-                            ?>
-                            <a class="dropdown-item" href="?doc=<?php echo $file->getID() ?>">
-                                <?php echo $file->getTitle() ?>
-                            </a>
+            <div class="navbar-content">
+                <a class="navbar-brand" href="#"><?php echo $this->title ?></a>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown" role="button">
+                            <?php echo $this->menuLabel ?>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute">
                             <?php
-                        }
-                        ?>
-                    </div>
-                </li>
-            </ul>
+                            $files = $this->docs->getFiles();
+
+                            foreach ($files as $file) {
+                                ?>
+                                <a class="dropdown-item" href="?doc=<?php echo $file->getID() ?>">
+                                    <?php echo $file->getTitle() ?>
+                                </a>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </nav>
-        <table id="scaffold">
-            <tbody>
-                <tr>
-                    <td id="sidebar">
-                        <div class="sidebar-wrapper">
-                            <?php echo $this->renderMenu($parser->getHeaders()); ?>
-                        </div>
-                    </td>
-                    <td id="content">
-                        <div class="content-wrapper">
-                            <?php echo $parser->render(); ?>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="scaffold">
+            <div id="sidebar">
+                <div class="sidebar-wrapper">
+                    <?php echo $this->renderMenu($parser->getHeaders()); ?>
+                </div>
+            </div>
+            <div id="content">
+                <div class="content-wrapper">
+                    <?php echo $parser->render(); ?>
+                </div>
+            </div>
+        </div>
         <?php
             if($this->darkMode) {
                 ?>
@@ -170,6 +168,7 @@ class DocsViewer
 
         ?>
         <script src="<?php echo $this->vendorURL ?>/components/jquery/jquery.js"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
         <script src="<?php echo $this->vendorURL ?>/twbs/bootstrap/dist/js/bootstrap.js"></script>
     </body>
 </html><?php
@@ -200,7 +199,7 @@ class DocsViewer
         OutputBuffering::start();
 
         ?>
-        <ul class="nav-level-0">
+        <ul class="nav-sidebar nav-level-0">
             <?php
             foreach ($headers as $header)
             {
