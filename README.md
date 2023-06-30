@@ -43,12 +43,12 @@ if(!file_exists('vendor/autoload.php')) {
     die('Please run <code>composer install</code> first.');
 }
 
-require_once 'vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 $manager = new DocsManager();
 
 // Add all the files you wish to view here, along with
-// a title that will be shown in the UI. 
+// a title that will be shown in the UI.
 $manager->addFile('Title of the file', '/path/to/documentation.md');
 
 // The viewer needs to know the URL to the vendor/ folder, relative
@@ -154,3 +154,26 @@ this `README.md` file. To get it running, follow these steps:
 1) Clone the repository into a webserver's document root
 2) Run `composer install` in the package folder to install the dependencies
 3) Point your browser to the package folder's `example.php` file
+
+## Markdown syntax extensions
+
+### Including external files
+
+The `{include-file}` command allows you to import the content of external files
+into your documents. This is especially handy for code examples, as it allows
+you to maintain them separately from the main document.
+
+If viewed through `example.php`, the following code sample is loaded dynamically, 
+for example:
+
+```php
+{include-file: tests/files/includes/test-php-highlight.php}
+```
+
+The command looks like this:
+
+```
+\{include-file: tests/files/includes/test-php-highlight.php\}
+```
+
+File paths are relative to the source markdown file.
