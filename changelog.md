@@ -1,3 +1,10 @@
+## v1.2.0 - Include files and UI update
+- Syntax: Added the `{include-file}` command to include external files.
+- UI: Improved readability, max content size to improve text flow.
+- Parser: Added option to specify allowed extensions for include files.
+- Parser: Added option to set max include file size.
+- Unit Tests: Added first unit tests.
+
 ## v1.1.0 - PHP 7.4 and bugfix release
 
 - Now requiring PHP >= 7.4.
