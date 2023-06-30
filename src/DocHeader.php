@@ -152,7 +152,7 @@ class DocHeader
 
         OutputBuffering::start();
         ?>
-            <ul class="nav-level-<?php echo $this->level ?>">
+            <ul class="nav-sidebar nav-level-<?php echo $this->level ?>">
                 <?php
                     foreach ($this->headers as $header)
                     {
