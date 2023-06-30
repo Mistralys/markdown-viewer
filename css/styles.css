@@ -1,18 +1,36 @@
-#sidebar .nav-level-0{
+UL.nav-level-0 {
     list-style: none;
     padding-left: 0;
-    margin:2rem 0.5rem;
+    margin: 2rem 0.5rem;
 }
 
-#sidebar .nav-level-0 > LI > A{
+UL.nav-sidebar > LI > A{
+    display:block;
+    padding:2px 0;
+}
+
+UL.nav-sidebar.nav-level-0 > LI > A{
+    padding:6px 0 12px 0;
+}
+
+UL.nav-sidebar > LI > A{
+    text-decoration: none;
+}
+
+UL.nav-level-0 > LI > A{
     font-weight: 600;
 }
 
-#sidebar .nav-level-0 > LI{
+UL.nav-level-0 > LI{
     margin-bottom: 1rem;
 }
 
-.nav-level-3{
+UL.nav-level-1{
+    list-style: none;
+    padding-left:0;
+}
+
+.nav-level-4{
     display:none;
 }
 
@@ -33,13 +51,41 @@ H3{
     vertical-align: top;
 }
 
-#content{
+:root{
+    --sidebar-width:18rem;
+    --content-width:50rem;
+}
+
+.navbar-content{
     width: 100%;
+    justify-content: space-between;
+    max-width:calc(var(--content-width) + var(--sidebar-width));
+    display:flex;
+    margin:0 auto;
+    align-items: center;
+}
+
+#scaffold{
+    display:flex;
+    width: 100%;
+    justify-content: space-between;
+    max-width:calc(var(--content-width) + var(--sidebar-width));
+    margin: 4rem auto 0 auto;
+}
+
+#content{
+    max-width:var(--content-width);
+    min-width: 30rem;
+    width: calc(100% - var(--sidebar-width));
+    box-sizing: border-box;
 }
 
 #sidebar{
-    min-width: 16rem;
-    background: rgba(0,0,0,0.1);
+    border-left: solid 1px rgba(0,0,0,0.1);
+    border-right: solid 1px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    width:var(--sidebar-width);
+    flex-shrink: 0;
 }
 
 .sidebar-wrapper{
@@ -80,10 +126,6 @@ CODE{
     height:4rem;
 }
 
-#scaffold{
-    margin-top:4rem;
-}
-
 A{
     color:#3269a5;
 }
@@ -94,9 +136,18 @@ A.anchor{
     visibility: hidden;
 }
 
+H2{
+    padding-top:1.5rem;
+}
+
+H3{
+    padding-top:1rem;
+}
+
 H1,H2,H3,H4,H5{
     margin-left: -1.2rem;
 }
+
 H1:hover .permalink > SPAN,
 H2:hover .permalink > SPAN,
 H3:hover .permalink > SPAN,
@@ -124,6 +175,7 @@ BLOCKQUOTE{
 BLOCKQUOTE > P:last-child{
     margin-bottom: 0;
 }
+
 
 /* ------------------------------------------------------------------
    SYNTAX HIGHLIGHTING
