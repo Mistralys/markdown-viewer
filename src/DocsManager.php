@@ -11,7 +11,9 @@ declare(strict_types=1);
 namespace Mistralys\MarkdownViewer;
 
 use AppUtils\FileHelper;
+use AppUtils\FileHelper\FolderInfo;
 use AppUtils\FileHelper_Exception;
+use SplFileInfo;
 
 /**
  * Handles a collection of documentation files to use
@@ -30,6 +32,21 @@ class DocsManager
      * @var DocFile[]
      */
     private array $files = array();
+    private ?DocsConfig $config;
+
+    public function __construct(?DocsConfig $config=null)
+    {
+        if($config === null) {
+            $config = new DocsConfig();
+        }
+
+        $this->config = $config;
+    }
+
+    public function getConfiguration() : DocsConfig
+    {
+        return $this->config;
+    }
 
     /**
      * Adds a documentation file to the collection.
@@ -42,7 +59,7 @@ class DocsManager
      */
     public function addFile(string $title, string $path, string $id='') : DocsManager
     {
-        $this->files[] = new DocFile($title, $path, $id);
+        $this->files[] = new DocFile($this, $title, $path, $id);
         return $this;
     }
 
