@@ -13,9 +13,9 @@ namespace Mistralys\MarkdownViewer;
 use AppUtils\ConvertHelper;
 use AppUtils\FileHelper;
 use AppUtils\FileHelper\FileInfo;
+use AppUtils\FileHelper_Exception;
 use GeSHi;
 use ParsedownExtra;
-use testsuites\FileHelperTests\PathInfoTest;
 
 /**
  * Markdown document parser. Uses "ParseDown extra" to parse the
@@ -26,9 +26,11 @@ use testsuites\FileHelperTests\PathInfoTest;
  */
 class DocParser
 {
-    public const VALIDATION_INCLUDE_FILE_NOT_FOUND = 140801;
-    public const VALIDATION_INCLUDE_IS_NOT_FOLDER = 140802;
-    public const VALIDATION_INCLUDE_FILE_TOO_BIG = 140803;
+    public const ERROR_INCLUDE_FILE_NOT_FOUND = 140801;
+    public const ERROR_INCLUDE_IS_NOT_A_FILE = 140802;
+    public const ERROR_INCLUDE_FILE_TOO_BIG = 140803;
+    public const ERROR_ATTEMPTED_NAVIGATING_UP = 140804;
+    public const ERROR_INVALID_INCLUDE_EXTENSION = 140805;
 
     public const OVERALL_CLASS = 'geshifilter';
 
@@ -52,22 +54,15 @@ class DocParser
     );
 
     /**
-     * @var string[]
-     */
-    private array $includeExtensions = array(
-        'md',
-        'txt'
-    );
-
-    /**
-     * @var array<int,array<int,string>>
+     * @var array<string,array<int,string>>
      */
     private array $includes = array();
-    private int $maxIncludeSize = 6000;
+    private DocsConfig $config;
 
     public function __construct(DocFile $file)
     {
         $this->file = $file;
+        $this->config = $this->file->getManager()->getConfiguration();
     }
 
     private function parse() : void
@@ -165,7 +160,6 @@ class DocParser
 
     private function preParseInjectIncludes(string $text) : string
     {
-        $basePath = dirname($this->file->getPath());
         $replaces = array();
 
         $text = str_replace(
@@ -182,7 +176,7 @@ class DocParser
 
         foreach($this->includes as $relativePath => $textMatches)
         {
-            $content = $this->loadIncludeContent($basePath.'/'.$relativePath);
+            $content = $this->renderIncludeContent($relativePath);
 
             foreach($textMatches as $matchedText)
             {
@@ -210,40 +204,97 @@ class DocParser
         );
     }
 
-    private function loadIncludeContent(string $path) : string
+    /**
+     * Detects the include file to load from the relative path
+     * specified in the document (looks in all include folders
+     * specified with {@see self::addIncludePath()}), disallowing
+     * paths that navigate upwards with <code>../</code>.
+     *
+     * @param string $relativePath
+     * @return FileInfo
+     *
+     * @throws DocsException
+     * @throws FileHelper_Exception
+     */
+    public function findIncludeFile(string $relativePath) : FileInfo
     {
-        if(!file_exists($path)) {
-            return $this->renderErrorMessage(
-                sprintf(
-                    'Include file `%s` not found.',
-                    basename($path)
-                ),
-                self::VALIDATION_INCLUDE_FILE_NOT_FOUND
+        // Disallow navigating upwards with "../"
+        if(strpos($relativePath, '..')) {
+            throw new DocsException(
+                'Navigating upwards from include folders is not allowed.',
+                '',
+                self::ERROR_ATTEMPTED_NAVIGATING_UP
             );
         }
 
-        if(is_dir($path)) {
-            return $this->renderErrorMessage(
-                sprintf(
-                    'Include path `%s` is not a file.',
-                    basename($path)
-                ),
-                self::VALIDATION_INCLUDE_IS_NOT_FOLDER
+        $ext = FileHelper::getExtension($relativePath);
+
+        if(!in_array($ext, $this->config->getIncludeExtensions(), true)) {
+            throw new DocsException(
+                sprintf('The extension %s is not allowed.', $ext),
+                '',
+                self::ERROR_INVALID_INCLUDE_EXTENSION
             );
         }
 
-        if(filesize($path) > $this->maxIncludeSize) {
-            return $this->renderErrorMessage(
-                sprintf(
-                    'Include file `%s` is too big. Max file size is %s.',
-                    basename($path),
-                    ConvertHelper::bytes2readable($this->maxIncludeSize)
-                ),
-                self::VALIDATION_INCLUDE_FILE_TOO_BIG
-            );
+        $paths = $this->config->getIncludePaths();
+
+        foreach($paths as $path)
+        {
+            $absolute = $path->getPath().'/'.$relativePath;
+
+            if(!file_exists($absolute)) {
+                continue;
+            }
+
+            if(is_dir($absolute)) {
+                throw new DocsException(
+                    sprintf(
+                        'Include path `%s` is not a file.',
+                        basename($absolute)
+                    ),
+                    '',
+                    self::ERROR_INCLUDE_IS_NOT_A_FILE
+                );
+            }
+
+            if(filesize($absolute) > $this->config->getMaxIncludeSize()) {
+                throw new DocsException(
+                    sprintf(
+                        'Include file `%s` is too big. Max file size is %s.',
+                        basename($absolute),
+                        ConvertHelper::bytes2readable($this->config->getMaxIncludeSize())
+                    ),
+                    '',
+                    self::ERROR_INCLUDE_FILE_TOO_BIG
+                );
+            }
+
+            return FileInfo::factory($absolute);
         }
 
-        return FileInfo::factory($path)->getContents();
+        throw new DocsException(
+            sprintf(
+                'Include file `%s` not found.',
+                basename($relativePath)
+            ),
+            '',
+            self::ERROR_INCLUDE_FILE_NOT_FOUND
+        );
+    }
+
+    private function renderIncludeContent(string $relativePath) : string
+    {
+        try{
+            return $this->findIncludeFile($relativePath)->getContents();
+        }
+        catch (DocsException $e)
+        {
+            return $this->renderErrorMessage(
+                $e->getMessage(),
+                $e->getCode()
+            );
+        }
     }
 
     private function renderErrorMessage(string $message, int $code) : string
@@ -347,53 +398,9 @@ class DocParser
 
     // region: Options
 
-    public function setMaxIncludeSize(int $bytes) : self
-    {
-        $this->maxIncludeSize = $bytes;
-        return $this;
-    }
 
-    public function getMaxIncludeSize() : int
-    {
-        return $this->maxIncludeSize;
-    }
 
-    /**
-     * Adds a file extension to allow for include files.
-     *
-     * @param string $extension
-     * @return $this
-     */
-    public function addIncludeExtension(string $extension) : self
-    {
-        $extension = strtolower(ltrim($extension, '.'));
 
-        if(!in_array($extension, $this->includeExtensions, true)) {
-            $this->includeExtensions[] = $extension;
-        }
-
-        return $this;
-    }
-
-    public function addIncludeExtensions(...$extensions) : self
-    {
-        foreach($extensions as $extension)
-        {
-            if(is_array($extension)) {
-                $this->addIncludeExtensions(...$extension);
-                continue;
-            }
-
-            $this->addIncludeExtension($extension);
-        }
-
-        return $this;
-    }
-
-    public function getIncludeExtensions() : array
-    {
-        return $this->includeExtensions;
-    }
 
     // endregion
 }
