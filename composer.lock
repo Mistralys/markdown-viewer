@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "876bde19f5fc746e6c958e5185c1fbe4",
+    "content-hash": "49496f01d0545be815bd9a794dbf120a",
     "packages": [
         {
             "name": "components/jquery",
@@ -259,16 +259,16 @@
         },
         {
             "name": "mistralys/application-utils",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Mistralys/application-utils.git",
-                "reference": "dd1f9a70bee852bf82a434dcfb77262c4ad79248"
+                "reference": "9fa5a8e324b48c91a856a36d096dc3fda5d32820"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Mistralys/application-utils/zipball/dd1f9a70bee852bf82a434dcfb77262c4ad79248",
-                "reference": "dd1f9a70bee852bf82a434dcfb77262c4ad79248",
+                "url": "https://api.github.com/repos/Mistralys/application-utils/zipball/9fa5a8e324b48c91a856a36d096dc3fda5d32820",
+                "reference": "9fa5a8e324b48c91a856a36d096dc3fda5d32820",
                 "shasum": ""
             },
             "require": {
@@ -317,9 +317,9 @@
             "description": "Drop-in utilities for PHP applications.",
             "support": {
                 "issues": "https://github.com/Mistralys/application-utils/issues",
-                "source": "https://github.com/Mistralys/application-utils/tree/2.3.2"
+                "source": "https://github.com/Mistralys/application-utils/tree/2.3.3"
             },
-            "time": "2023-03-24T13:19:15+00:00"
+            "time": "2023-07-03T12:49:28+00:00"
         },
         {
             "name": "mistralys/jtokenizer",
