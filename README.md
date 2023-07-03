@@ -40,7 +40,7 @@ declare(strict_types=1);
 use Mistralys\MarkdownViewer\DocsManager;
 use Mistralys\MarkdownViewer\DocsViewer;
 
-if(!file_exists('vendor/autoload.php')) {
+if(!file_exists(__DIR__.'/vendor/autoload.php')) {
     die('Please run <code>composer install</code> first.');
 }
 
@@ -156,9 +156,27 @@ this `README.md` file. To get it running, follow these steps:
 2) Run `composer install` in the package folder to install the dependencies
 3) Point your browser to the package folder's `example.php` file
 
-## Markdown syntax extensions
+## Setting options
 
-### Including external files
+All options regarding the parsing of markdown files are handled by the `DocsConfig`
+class. You can optionally pass a configuration instance to the manager to customize
+settings:
+
+```php
+use Mistralys\MarkdownViewer\DocsManager;
+use Mistralys\MarkdownViewer\DocsConfig;
+
+$config = (new DocsConfig())
+    ->addIncludePath(__DIR__.'/documentation/includes')
+    ->addIncludeExtension('php');
+
+$manager = (new DocsManager($config))
+    ->addFile('Package readme', 'README.md');
+```
+
+## Including external files
+
+### The include command
 
 The `{include-file}` command allows you to import the content of external files
 into your documents. This is especially handy for code examples, as it allows
@@ -168,17 +186,71 @@ If viewed through `example.php`, the following code sample is loaded dynamically
 for example:
 
 ```php
-{include-file: tests/files/includes/test-php-highlight.php}
+{include-file: test-php-highlight.php}
 ```
 
 The command looks like this:
 
 ```
-\{include-file: tests/files/includes/test-php-highlight.php\}
+\{include-file: test-php-highlight.php\}
 ```
-
-File paths are relative to the source markdown file.
 
 > NOTE: It is easy to go overboard with includes. Keep in mind that Markdown files
 > are meant to be read as-is. Splitting them up too much will make them unreadable
-> without the UI. Use them where it makes sense, like large code samples.
+> without the UI. Use them where it makes sense, like for large code samples.
+
+### Setting allowed paths
+
+Include commands are disallowed by default, as long as no include folders have
+been configured:
+
+```php
+use Mistralys\MarkdownViewer\DocsConfig;
+
+$config = (new DocsConfig())
+    ->addIncludePath('/documentation/includes');
+```
+
+Paths in the `{include-file}` command are relative to the configured include paths. 
+Multiple folders can be added, and all of them are searched. The first matching file 
+name is then used.
+
+### Setting allowed extensions
+
+By default, **only `md` and `txt` files are allowed** to be included. Additional 
+extensions can easily be added:
+
+```php
+use Mistralys\MarkdownViewer\DocsConfig;
+
+$config = (new DocsConfig())
+    ->addIncludeExtension('php');
+```
+
+Several extensions can also be added at once:
+
+```php
+use Mistralys\MarkdownViewer\DocsConfig;
+
+$extensions = array(
+    'php',
+    'js',
+    'css'
+);
+
+$config = (new DocsConfig())
+    ->addIncludeExtensions($extensions);
+```
+
+### Restricting file sizes
+
+To avoid including large files, only **files up to 6Kb may be included** by default. 
+This can be adjusted with the configuration class:
+
+```php
+use Mistralys\MarkdownViewer\DocsConfig;
+
+// Allow files up to 12Kb (12.000 bytes)
+$config = (new DocsConfig())
+    ->setMaxIncludeSize(12000);
+```
