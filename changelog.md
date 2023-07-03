@@ -1,3 +1,17 @@
+## v1.3.0 - Include configuration update (Breaking)
+- UI: Removed list of file numbers used for testing.
+- Parser: Modified include behavior to require setting allowed paths.
+- Parser: Increases security by disallowing including from outside allowed paths.
+- Manager: Added include paths via `DocsManager::addIncludePath()`.
+- Manager: Added the `DocsConfig` class to handle configuration options.
+
+### Breaking changes
+
+- Include files are no longer relative to the document, but to the
+  configured include paths.
+- Include paths must be set via the new `DocsConfig` class instead
+  of the parser class.
+
 ## v1.2.0 - Include files and UI update
 - Syntax: Added the `{include-file}` command to include external files.
 - UI: Improved readability, max content size to improve text flow.
