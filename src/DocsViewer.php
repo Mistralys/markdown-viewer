@@ -99,6 +99,7 @@ class DocsViewer
         $activeFile = $this->getActiveFile();
         $activeFileID = $activeFile->getID();
         $parser = new DocParser($activeFile);
+        $files = $this->docs->getFiles();
 
 ?><!doctype html>
 <html lang="en">
@@ -122,14 +123,16 @@ class DocsViewer
                                 <?php echo $activeFile->getTitle() ?>
                             </a>
                         </li>
+                        <?php
+                        if(count($files) > 1)
+                        {
+                        ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <?php echo $this->menuLabel ?>
                             </a>
                             <ul class="dropdown-menu files-dropdown">
                                 <?php
-                                $files = $this->docs->getFiles();
-
                                 foreach ($files as $file)
                                 {
                                     ?>
@@ -140,20 +143,12 @@ class DocsViewer
                                     </li>
                                     <?php
                                 }
-
-                                for($i=0; $i < 30; $i++)
-                                {
-                                    ?>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <?php echo $i ?>
-                                        </a>
-                                    </li>
-                                    <?php
-                                }
                                 ?>
                             </ul>
                         </li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
