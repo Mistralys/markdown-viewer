@@ -1,6 +1,8 @@
 ## v1.2.0 - Include files and UI update
 - Syntax: Added the `{include-file}` command to include external files.
 - UI: Improved readability, max content size to improve text flow.
+- UI: Fixed the list dropdown not scrolling with many files.
+- UI: Started adding localization support.
 - Parser: Added option to specify allowed extensions for include files.
 - Parser: Added option to set max include file size.
 - Unit Tests: Added first unit tests.
