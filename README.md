@@ -254,3 +254,85 @@ use Mistralys\MarkdownViewer\DocsConfig;
 $config = (new DocsConfig())
     ->setMaxIncludeSize(12000);
 ```
+
+### Filtering include file contents
+
+Filters allow the pre-processing of included files before they are rendered by the
+Markdown renderer. The whole content of the files can be filtered to prepare them
+for rendering.
+
+#### Example filter class
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use AppUtils\FileHelper\FileInfo;
+use Mistralys\MarkdownViewer\DocFile;
+use Mistralys\MarkdownViewer\DocsConfig;
+use Mistralys\MarkdownViewer\Parser\BaseIncludeFilter;
+
+class ExampleIncludeFilter extends BaseIncludeFilter
+{
+    public function getExtensions(): array
+    {
+        return array('example');
+    }
+    
+    public function isValidFor(DocFile $sourceFile, DocsConfig $config, FileInfo $includeFile): bool
+    {
+        return true;
+    }
+
+    public function filter(string $content): string
+    {
+        return str_replace('EXAMPLE', '**EXAMPLE**', $content);
+    }
+}
+```
+
+This filter ensures that all occurrences of `EXAMPLE` in the text are formatted
+as bold text.
+
+#### Adding filters
+
+Adding filters is very easy. Simply add a filter instance to the configuration,
+it will automatically be applied.
+
+```php
+<?php
+use Mistralys\MarkdownViewer\DocsConfig;
+
+$config = (new DocsConfig())
+    ->addIncludeFilter(new ExampleIncludeFilter());
+```
+
+#### Only filter specific files
+
+By default, filters are applied to all files that match the filter's file extension(s).
+However, if the extension matches, the filter is only applied if the `isValidFor()` 
+method returns true. This makes it possible to use the provided file and configuration 
+information to decide whether to filter the content.
+
+The following example limits the filtering to included files found in the folder 
+`/path/to/target/folder`, or any of its subfolders.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use AppUtils\FileHelper\FileInfo;
+use Mistralys\MarkdownViewer\DocFile;
+use Mistralys\MarkdownViewer\DocsConfig;
+use Mistralys\MarkdownViewer\Parser\BaseIncludeFilter;
+
+class ExampleIncludeFilter extends BaseIncludeFilter
+{
+    public function isValidFor(DocFile $sourceFile, DocsConfig $config, FileInfo $includeFile): bool
+    {
+        return $includeFile->isWithinPath('/path/to/target/folder');
+    }
+}
+```
