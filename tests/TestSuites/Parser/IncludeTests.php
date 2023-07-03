@@ -24,7 +24,7 @@ final class IncludeTests extends ViewerTestCase
             ->render();
 
         $this->assertStringContainsString('sample PHP file', $html);
-        $this->assertStringContainsString('#'.DocParser::VALIDATION_INCLUDE_FILE_NOT_FOUND, $html);
+        $this->assertStringContainsString('#'.DocParser::ERROR_INCLUDE_FILE_NOT_FOUND, $html);
     }
 
     public function test_includeSizeTooBig() : void
@@ -33,6 +33,6 @@ final class IncludeTests extends ViewerTestCase
             ->setMaxIncludeSize(20)
             ->render();
 
-        $this->assertStringContainsString('#'.DocParser::VALIDATION_INCLUDE_FILE_TOO_BIG, $html);
+        $this->assertStringContainsString('#'.DocParser::ERROR_INCLUDE_FILE_TOO_BIG, $html);
     }
 }
