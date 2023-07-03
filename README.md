@@ -3,11 +3,12 @@
 PHP based viewer for Markdown files, to view them with fenced code highlighting and navigation. 
 
 It is designed to be used for viewing markdown-based documentation files, in a fire and forget
-way. The layout is based on Bootstrap 4, and does not need any additional configuration.
+way. The layout is based on [Bootstrap 5](https://getbootstrap.com), and does not need any 
+additional configuration.
 
 ## Requirements
 
-- PHP7.3+
+- PHP7.4+
 
 ## Features
 
@@ -69,7 +70,7 @@ use Mistralys\MarkdownViewer\DocsManager;
 
 $manager = new DocsManager();
 
-// Add a single folder, non recursive.
+// Add a single folder, non-recursive.
 $manager->addFile('Name of the file', '/path/to/file.md');
 ```
 
@@ -82,7 +83,7 @@ use Mistralys\MarkdownViewer\DocsManager;
 
 $manager = new DocsManager();
 
-// Add a single folder, non recursive.
+// Add a single folder, non-recursive.
 $manager->addFolder('/path/to/files');
 
 // Add a folder and all its subfolders
@@ -97,7 +98,7 @@ use Mistralys\MarkdownViewer\DocsManager;
 
 $manager = new DocsManager();
 
-// Add all TXT files from a single folder, non recursive.
+// Add all TXT files from a single folder, non-recursive.
 $manager->addFolder('/path/to/files', false, 'txt');
 ```
 
@@ -177,3 +178,7 @@ The command looks like this:
 ```
 
 File paths are relative to the source markdown file.
+
+> NOTE: It is easy to go overboard with includes. Keep in mind that Markdown files
+> are meant to be read as-is. Splitting them up too much will make them unreadable
+> without the UI. Use them where it makes sense, like large code samples.
