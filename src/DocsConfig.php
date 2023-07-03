@@ -8,8 +8,10 @@ declare(strict_types=1);
 
 namespace Mistralys\MarkdownViewer;
 
+use AppUtils\FileHelper\FileInfo;
 use AppUtils\FileHelper\FolderInfo;
 use AppUtils\FileHelper_Exception;
+use Mistralys\MarkdownViewer\Parser\BaseIncludeFilter;
 use SplFileInfo;
 
 /**
@@ -20,10 +22,17 @@ use SplFileInfo;
  */
 class DocsConfig
 {
+    public const ERROR_FILTER_WITHOUT_EXTENSIONS = 141001;
+
     /**
      * @var array<string,FolderInfo>
      */
     private array $includePaths = array();
+
+    /**
+     * @var array<string,array<int,BaseIncludeFilter>>
+     */
+    private array $filters = array();
 
     /**
      * @var string[]
@@ -106,5 +115,45 @@ class DocsConfig
     public function getMaxIncludeSize() : int
     {
         return $this->maxIncludeSize;
+    }
+
+    /**
+     * Adds a filtering callback to modify the content loaded from an include
+     * file before it is inserted in the document.
+     *
+     * @param BaseIncludeFilter $filter
+     * @return $this
+     * @throws DocsException {@see self::ERROR_FILTER_WITHOUT_EXTENSIONS}
+     */
+    public function addIncludeFilter(BaseIncludeFilter $filter) : self
+    {
+        $extensions = $filter->getExtensions();
+
+        if(empty($extensions)) {
+            throw new DocsException(
+                'The filter has no extensions configured.',
+                sprintf(
+                    'Target filter class: [%s].',
+                    get_class($filter)
+                ),
+                self::ERROR_FILTER_WITHOUT_EXTENSIONS
+            );
+        }
+
+        foreach($extensions as $extension)
+        {
+            if (!isset($this->filters[$extension])) {
+                $this->filters[$extension] = array();
+            }
+
+            $this->filters[$extension][] = $filter;
+        }
+
+        return $this;
+    }
+
+    public function getIncludeFilters(string $extension) : array
+    {
+        return $this->filters[$extension] ?? array();
     }
 }

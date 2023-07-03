@@ -16,6 +16,7 @@ use AppUtils\FileHelper\FileInfo;
 use AppUtils\FileHelper_Exception;
 use GeSHi;
 use ParsedownExtra;
+use PHPUnit\TextUI\XmlConfiguration\File;
 
 /**
  * Markdown document parser. Uses "ParseDown extra" to parse the
@@ -291,7 +292,7 @@ class DocParser
     private function renderIncludeContent(string $relativePath) : string
     {
         try{
-            return $this->findIncludeFile($relativePath)->getContents();
+            return $this->filterInclude($this->findIncludeFile($relativePath));
         }
         catch (DocsException $e)
         {
@@ -300,6 +301,19 @@ class DocParser
                 $e->getCode()
             );
         }
+    }
+
+    private function filterInclude(FileInfo $file) : string
+    {
+        $content = $file->getContents();
+        $filters = $this->config->getIncludeFilters($file->getExtension());
+
+        foreach($filters as $filter)
+        {
+            $content = $filter->filter($this->file, $this->config, $file, $content);
+        }
+
+        return $content;
     }
 
     private function renderErrorMessage(string $message, int $code) : string
