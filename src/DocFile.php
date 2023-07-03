@@ -13,6 +13,7 @@ class DocFile
     private string $title;
     private string $path;
     private string $id;
+    private DocsManager $manager;
 
     /**
      * @param string $title
@@ -20,11 +21,17 @@ class DocFile
      * @param string $id
      * @throws FileHelper_Exception
      */
-    public function __construct(string $title, string $path, string $id='')
+    public function __construct(DocsManager $manager, string $title, string $path, string $id='')
     {
         $this->title = $title;
         $this->path = FileHelper::requireFileExists($path);
         $this->id = $this->resolveID($id);
+        $this->manager = $manager;
+    }
+
+    public function getManager() : DocsManager
+    {
+        return $this->manager;
     }
 
     private function resolveID(string $id) : string
