@@ -11,5 +11,16 @@ use Mistralys\MarkdownViewer\DocsConfig;
 abstract class BaseIncludeFilter
 {
     abstract public function getExtensions() : array;
-    abstract public function filter(DocFile $sourceFile, DocsConfig $config, FileInfo $includeFile, string $content) : string;
+
+    /**
+     * Checks whether the filter can be applied to the target
+     * file, using the specified configuration.
+     *
+     * @param DocFile $sourceFile
+     * @param DocsConfig $config
+     * @param FileInfo $includeFile
+     * @return bool
+     */
+    abstract public function isValidFor(DocFile $sourceFile, DocsConfig $config, FileInfo $includeFile) : bool;
+    abstract public function filter(string $content) : string;
 }

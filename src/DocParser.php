@@ -310,7 +310,9 @@ class DocParser
 
         foreach($filters as $filter)
         {
-            $content = $filter->filter($this->file, $this->config, $file, $content);
+            if($filter->isValidFor($this->file, $this->config, $file)) {
+                $content = $filter->filter($content);
+            }
         }
 
         return $content;

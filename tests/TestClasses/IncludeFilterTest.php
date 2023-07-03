@@ -18,7 +18,12 @@ class IncludeFilterTest extends BaseIncludeFilter
         return array('php');
     }
 
-    public function filter(DocFile $sourceFile, DocsConfig $config, FileInfo $includeFile, string $content): string
+    public function isValidFor(DocFile $sourceFile, DocsConfig $config, FileInfo $includeFile): bool
+    {
+        return true;
+    }
+
+    public function filter(string $content): string
     {
         return self::REPLACED_CONTENT;
     }
