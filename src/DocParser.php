@@ -65,6 +65,11 @@ class DocParser
         $this->config = $this->file->getManager()->getConfiguration();
     }
 
+    public function getConfig(): DocsConfig
+    {
+        return $this->config;
+    }
+
     private function parse() : void
     {
         if(isset($this->html)) {
@@ -219,7 +224,7 @@ class DocParser
     public function findIncludeFile(string $relativePath) : FileInfo
     {
         // Disallow navigating upwards with "../"
-        if(strpos($relativePath, '..')) {
+        if(strpos($relativePath, '..') !== false) {
             throw new DocsException(
                 'Navigating upwards from include folders is not allowed.',
                 '',
@@ -231,7 +236,7 @@ class DocParser
 
         if(!in_array($ext, $this->config->getIncludeExtensions(), true)) {
             throw new DocsException(
-                sprintf('The extension %s is not allowed.', $ext),
+                sprintf('The extension [%s] is not allowed.', $ext),
                 '',
                 self::ERROR_INVALID_INCLUDE_EXTENSION
             );
