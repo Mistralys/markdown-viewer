@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Mistralys\MarkdownViewer;
 
-use AppUtils\OutputBuffering;use AppUtils\OutputBuffering_Exception;
+use AppUtils\OutputBuffering;use AppUtils\OutputBuffering_Exception;use function AppLocalize\pt;
 
 /**
  * Renders the documentation viewer UI, using the
@@ -96,7 +96,9 @@ class DocsViewer
 
     public function display() : void
     {
-        $parser = new DocParser($this->getActiveFile());
+        $activeFile = $this->getActiveFile();
+        $activeFileID = $activeFile->getID();
+        $parser = new DocParser($activeFile);
 
 ?><!doctype html>
 <html lang="en">
@@ -107,29 +109,53 @@ class DocsViewer
         <title><?php echo $this->title ?></title>
     </head>
     <body>
-        <nav class="navbar navbar-dark bg-dark fixed-top">
-            <div class="navbar-content">
-                <a class="navbar-brand" href="#"><?php echo $this->title ?></a>
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown" role="button">
-                            <?php echo $this->menuLabel ?>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="position: absolute">
-                            <?php
-                            $files = $this->docs->getFiles();
-
-                            foreach ($files as $file) {
-                                ?>
-                                <a class="dropdown-item" href="?doc=<?php echo $file->getID() ?>">
-                                    <?php echo $file->getTitle() ?>
-                                </a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="?"><?php echo $this->title ?></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="<?php pt('Toggle navigation') ?>">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">
+                                <?php echo $activeFile->getTitle() ?>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?php echo $this->menuLabel ?>
+                            </a>
+                            <ul class="dropdown-menu files-dropdown">
                                 <?php
-                            }
-                            ?>
-                        </div>
-                    </li>
-                </ul>
+                                $files = $this->docs->getFiles();
+
+                                foreach ($files as $file)
+                                {
+                                    ?>
+                                    <li>
+                                        <a class="dropdown-item <?php if($file->getID() === $activeFileID) { echo 'disabled'; } ?>" href="?doc=<?php echo $file->getID() ?>">
+                                            <?php echo $file->getTitle() ?>
+                                        </a>
+                                    </li>
+                                    <?php
+                                }
+
+                                for($i=0; $i < 30; $i++)
+                                {
+                                    ?>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <?php echo $i ?>
+                                        </a>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <div id="scaffold">
