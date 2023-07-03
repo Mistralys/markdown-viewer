@@ -99,6 +99,11 @@ H3{
     padding:2rem;
 }
 
+.files-dropdown{
+    max-height:calc(100vh - 14rem);
+    overflow:auto;
+}
+
 PRE{
     padding:1rem;
     background: rgba(0,0,0,0.05);
