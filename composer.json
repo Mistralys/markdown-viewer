@@ -25,6 +25,7 @@
     "twbs/bootstrap": ">=v4.6.0",
     "components/jquery": ">=3.5.1",
     "mistralys/application-utils": ">=1.6.0",
+    "mistralys/application-localization": ">=1.4.1",
     "php": ">=7.4"
   },
   "require-dev": {
