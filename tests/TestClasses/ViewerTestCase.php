@@ -6,6 +6,8 @@ namespace Mistralys\MarkdownViewerTests\TestClasses;
 
 use Mistralys\MarkdownViewer\DocFile;
 use Mistralys\MarkdownViewer\DocParser;
+use Mistralys\MarkdownViewer\DocsConfig;
+use Mistralys\MarkdownViewer\DocsManager;
 use PHPUnit\Framework\TestCase;
 
 abstract class ViewerTestCase extends TestCase
@@ -36,6 +38,12 @@ abstract class ViewerTestCase extends TestCase
             $title = 'Title';
         }
 
-        return new DocParser(new DocFile($title, $this->getPath($relativePath)));
+        $config = (new DocsConfig())
+            ->addIncludePath($this->filesFolder.'/includes')
+            ->addIncludeExtension('php');
+
+        $manager = new DocsManager($config);
+
+        return new DocParser(new DocFile($manager, $title, $this->getPath($relativePath)));
     }
 }

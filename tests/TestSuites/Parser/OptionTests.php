@@ -4,34 +4,35 @@ declare(strict_types=1);
 
 namespace Mistralys\MarkdownViewerTests\TestSuites\Parser;
 
+use Mistralys\MarkdownViewer\DocsConfig;
 use Mistralys\MarkdownViewerTests\TestClasses\ViewerTestCase;
 
 final class OptionTests extends ViewerTestCase
 {
     public function test_addIncludeExtension() : void
     {
-        $parser = $this->createTestParser();
+        $config = new DocsConfig();
 
-        $this->assertNotContains('json', $parser->getIncludeExtensions());
-        $this->assertNotContains('rtf', $parser->getIncludeExtensions());
+        $this->assertNotContains('json', $config->getIncludeExtensions());
+        $this->assertNotContains('rtf', $config->getIncludeExtensions());
 
-        $parser->addIncludeExtension('json');
-        $parser->addIncludeExtension('.rtf');
+        $config->addIncludeExtension('json');
+        $config->addIncludeExtension('.rtf');
 
-        $this->assertContains('json', $parser->getIncludeExtensions());
-        $this->assertContains('rtf', $parser->getIncludeExtensions());
+        $this->assertContains('json', $config->getIncludeExtensions());
+        $this->assertContains('rtf', $config->getIncludeExtensions());
     }
 
     public function test_addIncludeExtensions() : void
     {
-        $parser = $this->createTestParser();
+        $config = new DocsConfig();
 
-        $this->assertNotContains('json', $parser->getIncludeExtensions());
+        $this->assertNotContains('json', $config->getIncludeExtensions());
 
-        $parser->addIncludeExtension('json');
-        $parser->addIncludeExtension('.rtf');
+        $config->addIncludeExtension('json');
+        $config->addIncludeExtension('.rtf');
 
-        $this->assertContains('json', $parser->getIncludeExtensions());
-        $this->assertContains('rtf', $parser->getIncludeExtensions());
+        $this->assertContains('json', $config->getIncludeExtensions());
+        $this->assertContains('rtf', $config->getIncludeExtensions());
     }
 }
