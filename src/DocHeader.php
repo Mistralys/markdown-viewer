@@ -136,7 +136,7 @@ class DocHeader
 
         ?>
             <li>
-                <a href="#<?php echo $this->getAnchor() ?>"><?php echo $this->title ?></a>
+                <a href="#<?php echo $this->getAnchor() ?>"><?php echo $this->getTitle() ?></a>
                 <?php echo $this->renderSubheaders() ?>
             </li>
         <?php
