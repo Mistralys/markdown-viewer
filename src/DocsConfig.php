@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Mistralys\MarkdownViewer;
 
-use AppUtils\FileHelper\FileInfo;
 use AppUtils\FileHelper\FolderInfo;
 use AppUtils\FileHelper_Exception;
 use Mistralys\MarkdownViewer\Parser\BaseIncludeFilter;
