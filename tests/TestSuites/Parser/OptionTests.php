@@ -29,8 +29,7 @@ final class OptionTests extends ViewerTestCase
 
         $this->assertNotContains('json', $config->getIncludeExtensions());
 
-        $config->addIncludeExtension('json');
-        $config->addIncludeExtension('.rtf');
+        $config->addIncludeExtensions('json', '.rtf');
 
         $this->assertContains('json', $config->getIncludeExtensions());
         $this->assertContains('rtf', $config->getIncludeExtensions());
