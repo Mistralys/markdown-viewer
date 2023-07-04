@@ -1,6 +1,7 @@
 ## v1.3.1 - Include filtering
 - Parser: Added possibility to filter the content of included files.
-- Dependencies: Minimum AppUtils version increased to [v2.3.3](https://github.com/Mistralys/application-utils/releases/tag/2.3.3).
+- Dependencies: Minimum AppUtils version increased to [v2.3.4](https://github.com/Mistralys/application-utils/releases/tag/2.3.4).
+- Core: Tested clean on PHP8.2.
 
 ## v1.3.0 - Include configuration update (Breaking)
 - UI: Removed list of file numbers used for testing.
